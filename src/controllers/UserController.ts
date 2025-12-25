@@ -4,13 +4,8 @@ import { UserService } from "../services/UserService";
 //register user
 const registerUser =
     (userService: UserService) => async (req: Request, res: Response) => {
-        try {
-            const newUser = await userService.register(req.body);
-            return res.status(201).json(newUser.id);
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json({ error: "Internal server error." });
-        }
+        const newUser = await userService.register(req.body);
+        return res.status(201).json(newUser.id);
     };
 
 //login user
@@ -29,6 +24,7 @@ const getUserInfo = (req: Request, res: Response) => {
 const updateUser = (req: Request, res: Response) => {
     try {
     } catch (error) {}
+    ``;
 };
 
 //delete user account

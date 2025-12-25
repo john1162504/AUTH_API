@@ -1,6 +1,7 @@
 import { UserService } from "./UserService";
 import { prisma } from "../lib/prisma";
 import { hashPassword } from "../utils/encryptor";
+import { ConflictError } from "../errors/ConflictError";
 
 export const userService: UserService = {
     async register(data) {
@@ -9,7 +10,7 @@ export const userService: UserService = {
         });
 
         if (existing) {
-            throw new Error("User with this email already exists");
+            throw new ConflictError("User with this email already exists");
         }
 
         const hashedPassword = await hashPassword(data.password);

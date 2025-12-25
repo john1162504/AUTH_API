@@ -7,7 +7,7 @@ import {
     deleteUser,
 } from "../controllers/UserController";
 import { validate } from "../middlewares/validator";
-import { RegisterSchema } from "../schemas/user.schema";
+import { RegisterSchema } from "../schemas/UserSchema";
 
 const router = Router();
 
