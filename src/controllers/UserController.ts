@@ -9,10 +9,11 @@ const registerUser =
     };
 
 //login user
-const loginUser = (req: Request, res: Response) => {
-    try {
-    } catch (error) {}
-};
+const loginUser =
+    (userService: UserService) => async (req: Request, res: Response) => {
+        const result = await userService.login(req.body);
+        return res.status(200).json(result);
+    };
 
 //get user info
 const getUserInfo = (req: Request, res: Response) => {

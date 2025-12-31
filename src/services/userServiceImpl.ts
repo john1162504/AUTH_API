@@ -1,7 +1,10 @@
 import { UserService } from "./UserService";
 import { prisma } from "../lib/prisma";
-import { hashPassword } from "../utils/encryptor";
+import { hashPassword, comparePassword } from "../utils/Encryptor";
 import { ConflictError } from "../errors/ConflictError";
+import { PubilicUerSchema } from "../schemas/user.schema";
+import { UnauthorisedError } from "../errors/UnauthorisedError";
+import { signToken } from "../utils/jwt";
 
 export const userService: UserService = {
     async register(data) {
@@ -23,6 +26,26 @@ export const userService: UserService = {
             },
         });
 
-        return newUser;
+        return PubilicUerSchema.parse(newUser);
+    },
+
+    async login(data) {
+        const user = await prisma.user.findUnique({
+            where: { email: data.email },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                password: true,
+            },
+        });
+
+        if (!user || !(await comparePassword(data.password, user.password))) {
+            throw new UnauthorisedError("Invalid email or password");
+        }
+
+        const token = signToken({ userId: user.id.toString() });
+
+        return { token, user: PubilicUerSchema.parse(user) };
     },
 };
