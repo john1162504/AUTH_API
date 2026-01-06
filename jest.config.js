@@ -1,0 +1,9 @@
+const config = {
+    preset: "ts-jest",
+    testEnvironment: "node",
+    clearMocks: true,
+    moduleFileExtensions: ["ts", "js"],
+    testMatch: ["**/__tests__/**/*.test.ts"],
+};
+
+export default config;

@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import userRoutes from "./routes/userRoutes";
+import userRoutes from "./routes/UserRoutes";
 import { errorHandler } from "./middlewares/ErrorHandler";
 
 dotenv.config();
@@ -17,8 +17,4 @@ app.get("/health", (_, res) => {
     res.json({ status: "ok" });
 });
 
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-    console.log(`API running on port ${PORT}`);
-});
+export default app;

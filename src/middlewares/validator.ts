@@ -6,10 +6,10 @@ export const validate =
     (req: Request, res: Response, next: NextFunction) => {
         const result = schema.safeParse(req.body);
 
-        //todo: improve error message
         if (!result.success) {
             return res.status(400).json({
                 errors: result.error,
+                message: "Invalid request data",
             });
         }
 

@@ -4,7 +4,7 @@ import { UnauthorisedError } from "../errors/UnauthorisedError";
 
 export interface AuthenticatedRequest extends Request {
     user: {
-        id: string;
+        id: number;
     };
 }
 

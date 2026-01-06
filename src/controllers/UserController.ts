@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { UserService } from "../services/UserService";
+import { AuthenticatedRequest } from "../middlewares/Authenticate";
+import { requireUser } from "../middlewares/requireUser";
 
 //register user
 const registerUser =
@@ -16,22 +18,27 @@ const loginUser =
     };
 
 //get user info
-const getUserInfo = (req: Request, res: Response) => {
-    try {
-    } catch (error) {}
-};
+const getUserInfo =
+    (userService: UserService) => async (req: Request, res: Response) => {
+        requireUser(req);
+        const user = await userService.getUserInfo(req.user.id);
+        return res.status(200).json(user);
+    };
 
 //update user info
-const updateUser = (req: Request, res: Response) => {
-    try {
-    } catch (error) {}
-    ``;
-};
+const updateUser =
+    (userService: UserService) => async (req: Request, res: Response) => {
+        requireUser(req);
+        const updatedUser = await userService.updateUser(req.user.id, req.body);
+        return res.status(200).json(updatedUser);
+    };
 
 //delete user account
-const deleteUser = (req: Request, res: Response) => {
-    try {
-    } catch (error) {}
-};
+const deleteUser =
+    (userService: UserService) => async (req: Request, res: Response) => {
+        requireUser(req);
+        await userService.deleteUser(req.user.id);
+        return res.status(204).send();
+    };
 
 export { registerUser, loginUser, getUserInfo, updateUser, deleteUser };

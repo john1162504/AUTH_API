@@ -8,7 +8,7 @@ if (!JWT_SECRET) {
 }
 
 export type JwtPayload = {
-    userId: string;
+    userId: number;
 };
 
 export const signToken = (payload: JwtPayload): string => {

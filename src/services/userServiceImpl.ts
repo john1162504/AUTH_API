@@ -5,6 +5,7 @@ import { ConflictError } from "../errors/ConflictError";
 import { PubilicUerSchema } from "../schemas/user.schema";
 import { UnauthorisedError } from "../errors/UnauthorisedError";
 import { signToken } from "../utils/jwt";
+import { UnfoundError } from "../errors/UnfoundError";
 
 export const userService: UserService = {
     async register(data) {
@@ -44,8 +45,37 @@ export const userService: UserService = {
             throw new UnauthorisedError("Invalid email or password");
         }
 
-        const token = signToken({ userId: user.id.toString() });
+        const token = signToken({ userId: user.id });
 
         return { token, user: PubilicUerSchema.parse(user) };
+    },
+
+    async getUserInfo(userId) {
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+        });
+
+        if (!user) {
+            throw new UnfoundError("User not found");
+        }
+
+        return PubilicUerSchema.parse(user);
+    },
+
+    async updateUser(userId, data) {
+        const updatedUser = await prisma.user.update({
+            where: { id: userId },
+            data: {
+                name: data.name,
+            },
+        });
+
+        return PubilicUerSchema.parse(updatedUser);
+    },
+
+    async deleteUser(userId) {
+        await prisma.user.delete({
+            where: { id: userId },
+        });
     },
 };

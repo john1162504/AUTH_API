@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const PubilicUerSchema = z.object({
-    id: z.string(),
+    id: z.number(),
     name: z.string().min(1).max(100),
     email: z.email(),
 });
@@ -22,3 +22,9 @@ export const LoginSchema = z.object({
 });
 
 export type LoginInput = z.infer<typeof LoginSchema>;
+
+export const UpdateUserSchema = z.object({
+    name: z.string().min(1).max(100).optional(),
+});
+
+export type UpdateUserInput = z.infer<typeof UpdateUserSchema>;
