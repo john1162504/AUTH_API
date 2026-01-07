@@ -6,3 +6,5 @@ dist
 src/.DS_Store
 .DS_Store
 prisma/migrations/*
+.env.test
+coverage

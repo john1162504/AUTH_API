@@ -1,4 +1,3 @@
-import { User } from "../../generated/prisma/client";
 import {
     LoginInput,
     PublicUser,

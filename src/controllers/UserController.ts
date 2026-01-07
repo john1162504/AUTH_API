@@ -1,13 +1,12 @@
 import { Request, Response } from "express";
 import { UserService } from "../services/UserService";
-import { AuthenticatedRequest } from "../middlewares/Authenticate";
 import { requireUser } from "../middlewares/requireUser";
 
 //register user
 const registerUser =
     (userService: UserService) => async (req: Request, res: Response) => {
         const newUser = await userService.register(req.body);
-        return res.status(201).json(newUser.id);
+        return res.status(201).json({ id: newUser.id });
     };
 
 //login user
