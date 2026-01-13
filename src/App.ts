@@ -1,12 +1,7 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import UserRoutes from "./routes/UserRoutes";
 import { errorHandler } from "./middlewares/ErrorHandler";
-
-dotenv.config({
-    path: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
-});
 
 const app = express();
 
