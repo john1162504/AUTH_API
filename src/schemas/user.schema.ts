@@ -24,7 +24,7 @@ export const LoginSchema = z.object({
 export type LoginInput = z.infer<typeof LoginSchema>;
 
 export const UpdateUserSchema = z.object({
-    name: z.string().min(1).max(100).optional(),
+    name: z.string().min(1).max(100),
 });
 
 export type UpdateUserInput = z.infer<typeof UpdateUserSchema>;

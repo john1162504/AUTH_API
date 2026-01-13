@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { Request, Response, NextFunction } from "express";
+import { InvalidRequest } from "../errors/InvalidRequest";
 
 export const validate =
     <T>(schema: z.ZodType<T>) =>
@@ -7,10 +8,7 @@ export const validate =
         const result = schema.safeParse(req.body);
 
         if (!result.success) {
-            return res.status(400).json({
-                errors: result.error,
-                message: "Invalid request data",
-            });
+            throw new InvalidRequest("Invalid request data");
         }
 
         req.body = result.data;
