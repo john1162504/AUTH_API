@@ -1,11 +1,11 @@
 import { UserService } from "./UserService";
-import { getPrisma } from "../lib/prisma";
-import { hashPassword, comparePassword } from "../utils/Encryptor";
-import { ConflictError } from "../errors/ConflictError";
-import { PubilicUerSchema } from "../schemas/user.schema";
-import { UnauthorisedError } from "../errors/UnauthorisedError";
-import { signToken } from "../utils/jwt";
-import { UnfoundError } from "../errors/UnfoundError";
+import { getPrisma } from "@/lib/prisma";
+import { hashPassword, comparePassword } from "@/utils/Encryptor";
+import { ConflictError } from "@/errors/ConflictError";
+import { PubilicUerSchema } from "@/schemas/user.schema";
+import { UnauthorisedError } from "@/errors/UnauthorisedError";
+import { signToken } from "@/utils/jwt";
+import { UnfoundError } from "@/errors/UnfoundError";
 
 const prisma = getPrisma();
 
@@ -49,7 +49,7 @@ export const userService: UserService = {
 
         const token = signToken({ userId: user.id });
 
-        return { token, user: PubilicUerSchema.parse(user) };
+        return { token: token, user: PubilicUerSchema.parse(user) };
     },
 
     async getUserInfo(userId) {

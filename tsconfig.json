@@ -10,11 +10,12 @@
         "outDir": "dist",
         "rootDir": "src",
         "paths": {
-            "*": ["src/*"]
+            "*": ["src/*"],
+            "@/*": ["src/*"]
         }
     },
     "tsc-alias": {
         "resolveFullPaths": true
     },
-    "include": ["src", "src/tests", "types"]
+    "include": ["src", "tests", "types"]
 }

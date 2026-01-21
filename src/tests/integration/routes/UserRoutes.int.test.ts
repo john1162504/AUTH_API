@@ -1,9 +1,8 @@
 import request from "supertest";
 import { describe, it, expect, beforeAll, afterAll, vi } from "vitest";
-import { app } from "../../app";
-import { getPrisma } from "../../lib/prisma";
-import { beforeEach } from "node:test";
-import e from "express";
+import { app } from "@/app";
+import { getPrisma } from "@/lib/prisma";
+import { userService } from "@/services/userServiceImpl";
 
 describe("UserRoutes", () => {
     const prisma = getPrisma();
@@ -181,6 +180,32 @@ describe("UserRoutes", () => {
 
             expect(res.statusCode).toEqual(401);
             expect(res.body).toHaveProperty("error");
+        });
+    });
+
+    describe("UserRoutes - service error handling", () => {
+        const originalRegister = userService.register;
+
+        beforeAll(() => {
+            vi.spyOn(userService, "register").mockRejectedValue(
+                new Error("Service error")
+            );
+        });
+
+        afterAll(() => {
+            userService.register = originalRegister;
+            vi.clearAllMocks();
+        });
+
+        it("should return 500 when the service throws an unexpected error", async () => {
+            const res = await request(app).post("/api/users/register").send({
+                name: "John",
+                email: "john@example.com",
+                password: "password123",
+            });
+
+            expect(res.status).toBe(500);
+            expect(res.body).toHaveProperty("error", "Internal server error.");
         });
     });
 });

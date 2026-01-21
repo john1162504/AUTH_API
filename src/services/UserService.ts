@@ -3,7 +3,7 @@ import {
     PublicUser,
     RegisterInput,
     UpdateUserInput,
-} from "../schemas/user.schema";
+} from "@/schemas/user.schema";
 
 export interface UserService {
     register(data: RegisterInput): Promise<PublicUser>;

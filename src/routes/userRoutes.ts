@@ -5,15 +5,15 @@ import {
     getUserInfo,
     updateUser,
     deleteUser,
-} from "../controllers/UserController";
-import { validate } from "../middlewares/Validator";
-import { authenticate } from "../middlewares/Authenticate";
+} from "@/controllers/UserController";
+import { validate } from "@/middlewares/Validator";
+import { authenticate } from "@/middlewares/Authenticate";
 import {
     RegisterSchema,
     LoginSchema,
     UpdateUserSchema,
-} from "../schemas/user.schema";
-import { userService } from "../services/userServiceImpl";
+} from "@/schemas/user.schema";
+import { userService } from "@/services/userServiceImpl";
 
 const router = Router();
 

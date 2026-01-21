@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { verifyToken } from "../utils/jwt";
-import { UnauthorisedError } from "../errors/UnauthorisedError";
+import { verifyToken } from "@/utils/jwt";
+import { UnauthorisedError } from "@/errors/UnauthorisedError";
 
 export interface AuthenticatedRequest extends Request {
     user: {
@@ -11,7 +11,7 @@ export interface AuthenticatedRequest extends Request {
 export const authenticate = (
     req: Request,
     _res: Response,
-    next: NextFunction
+    next: NextFunction,
 ) => {
     const authHeader = req.headers.authorization;
 
@@ -22,7 +22,7 @@ export const authenticate = (
     const token = authHeader.split(" ")[1];
     const payload = verifyToken(token);
 
-    (req as AuthenticatedRequest).user = {
+    req.user = {
         id: payload.userId,
     };
 

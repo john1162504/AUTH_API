@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
+import { JwtError } from "@/errors/JwtError";
 
 const JWT_EXPIRES_IN = "1h";
+const { JsonWebTokenError, TokenExpiredError } = jwt;
 
 export type JwtPayload = {
     userId: number;
@@ -21,5 +23,15 @@ export const signToken = (payload: JwtPayload): string => {
 };
 
 export const verifyToken = (token: string): JwtPayload => {
-    return jwt.verify(token, getJwtSecret()) as JwtPayload;
+    try {
+        return jwt.verify(token, getJwtSecret()) as JwtPayload;
+    } catch (err) {
+        if (err instanceof TokenExpiredError) {
+            throw new JwtError("Token expired");
+        }
+        if (err instanceof JsonWebTokenError) {
+            throw new JwtError("Invalid token");
+        }
+        throw err; // real bug, not auth failure
+    }
 };

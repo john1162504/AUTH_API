@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { UserService } from "../services/UserService";
-import { requireUser } from "../middlewares/requireUser";
+import { UserService } from "@/services/UserService";
+import { requireUser } from "@/middlewares/requireUser";
 
 //register user
 const registerUser =
@@ -20,7 +20,7 @@ const loginUser =
 const getUserInfo =
     (userService: UserService) => async (req: Request, res: Response) => {
         requireUser(req);
-        const user = await userService.getUserInfo(req.user.id);
+        const user = await userService.getUserInfo(req.user!.id);
         return res.status(200).json(user);
     };
 
@@ -28,7 +28,10 @@ const getUserInfo =
 const updateUser =
     (userService: UserService) => async (req: Request, res: Response) => {
         requireUser(req);
-        const updatedUser = await userService.updateUser(req.user.id, req.body);
+        const updatedUser = await userService.updateUser(
+            req.user!.id,
+            req.body,
+        );
         return res.status(200).json(updatedUser);
     };
 
@@ -36,7 +39,7 @@ const updateUser =
 const deleteUser =
     (userService: UserService) => async (req: Request, res: Response) => {
         requireUser(req);
-        await userService.deleteUser(req.user.id);
+        await userService.deleteUser(req.user!.id);
         return res.status(204).send();
     };
 

@@ -1,9 +1,13 @@
 import { defineConfig } from "vitest/config";
-
-// Load .env.test for all tests
-// dotenv.config({ path: path.resolve(__dirname, ".env.test") });
+import path from "path";
 
 export default defineConfig({
+    resolve: {
+        alias: {
+            "@": path.resolve(__dirname, "src"),
+        },
+    },
+
     test: {
         globals: true,
         environment: "node",

@@ -11,6 +11,8 @@
         "studio:test": "dotenv -e .env.test prisma studio",
         "test:reset": "dotenv -e .env.test -- prisma migrate reset --force",
         "db-push:test": "dotenv -e .env.test -- prisma db push",
+        "test:unit": "vitest run src/tests/unit --coverage",
+        "test:integration": "npm run test:reset && npm run db-push:test && vitest run src/tests/integration --coverage",
         "test": "npm run test:reset && npm run db-push:test && vitest run --coverage"
     },
     "keywords": [],

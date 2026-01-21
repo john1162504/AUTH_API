@@ -1,13 +1,13 @@
 import { Request, Response, NextFunction } from "express";
-import { AppError } from "../errors/AppError";
+import { AppError } from "@/errors/AppError";
 
 export const errorHandler = (
     err: unknown,
     req: Request,
     res: Response,
-    _next: NextFunction
+    _next: NextFunction,
 ) => {
-    if (err instanceof AppError && err.isOperational) {
+    if (err instanceof AppError) {
         return res.status(err.statusCode).json({
             error: err.message,
         });
